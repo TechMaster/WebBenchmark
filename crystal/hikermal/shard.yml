@@ -1,0 +1,17 @@
+name: hikermal
+version: 0.1.0
+
+authors:
+  - Trinh Minh Cuong <cuong@techmaster.vn>
+
+targets:
+  hikermal:
+    main: src/hikermal.cr
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+
+crystal: 0.27.1
+
+license: MIT

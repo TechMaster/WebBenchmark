@@ -120,3 +120,15 @@ $ ./asp_net_core
 | 9  | Express Multicore  | 25,278  | 29,540  | 31,068  | 30,814  | 31,045  | Ổn định                                        |
 | 10 | Sanic Python       | 8,593   | 8,748   | 8,436   | 9,027   | 8,529   | Client.Timeout exceeded while awaiting headers |
 | 11 | Flask Python       | 342     | 400     |         |         |         | Chán không buồn test, quá chậm !               |
+
+### Kết luận
+
+Các framework viết bằng Golang chịu tải tốt, phản hồi nhanh và ổn định. Nhiều web server sau khi khởi động lên, số lượng request đến cần phải tăng từ từ để web app làm quen dần. Nhưng web app Golang không cần như vậy.
+
+Node.js chạy chế độ cluster có cải thiện hơn về khả năng chịu tải, nhưng vẫn kém hơn Golang Web.
+
+ASP.net Core 3.x có cải tiến nhiều về tốc độ, hiệu năng. Nhưng code vẫn hết sức nhiêu khê.
+
+Fiber Golang sử dụng FastHttp, tốc độ rất nhanh, nhưng lại không ổn định qua những lần kiểm thử.
+
+Mình vẫn dùng Iris framework, đủ nhanh và ổn định. Tác giả fix bug nhiệt tình, hỗ trợ yêu cầu cũng tốt.

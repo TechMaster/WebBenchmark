@@ -8,6 +8,21 @@
 7. [Node.js Express](https://github.com/expressjs/express)
 8. [ASP.net Core 3.x](https://github.com/dotnet/aspnetcore)
 
+## Cấu hình máy test và công cụ test
+Dell Workstation M6800, Core i7 M4800, GPU NVidia K3100, RAM 16GRAM, ổ cứng SSD
+
+Công cụ benchmark [rakyll/hey](https://github.com/rakyll/hey)
+
+Tất cả web server đều lập trình để lắng nghe ở cổng 8080, xuất ra duy nhất dòng chữ "Hello World!"
+
+Lệnh benchmark đơn giản thôi, tạo ra 200,000 requests, mỗi lúc có 300 requests gửi đến server.
+
+```
+$ hey -n 200000 -c 300 http://localhost:8080
+```
+
+Các web server đều viết code tối giản, ngắn nhất, tối ưu nhất có thể
+
 ## Node.js có 3 loại
 ### Node thuần không dùng framework trong thư mục Node.
 ```javascript

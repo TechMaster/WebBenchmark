@@ -8,6 +8,8 @@
 7. [Node.js Express](https://github.com/expressjs/express)
 8. [ASP.net Core 3.x](https://github.com/dotnet/aspnetcore)
 
+Người thực hiện Trịnh Minh Cường, bảo vệ tại [Techmaster Việt nam](https://techmaster.vn)
+
 ## Cấu hình máy test và công cụ test
 Dell Workstation M6800, Core i7 M4800, GPU NVidia K3100, RAM 16GRAM, ổ cứng SSD
 
@@ -89,7 +91,7 @@ if (clusterWorkerSize > 1) {
 ```
 
 ## Để chạy Sanic và Flask
-Cài đặt Python 3.7.x
+Cài đặt Python 3.7.x trước, sau đó tạo Virtual Environment, và cài đặt sanic, flask
 
 ```
 $ python3 -m venv venv
@@ -97,6 +99,15 @@ $ source venv/bin/activate
 $ pip install -r requirements.txt
 
 ```
+Khi khởi động app Python nhớ kích hoạt Virtual Environment bằng lệnh
+```
+$ source venv/bin/activate
+```
+Sau đó chạy
+```
+$ python app.py
+```
+
 ## ASP.net Core 3.1
 Chạy file release sau khi build
 ```
@@ -104,6 +115,31 @@ $ cd asp_net_core
 $ dotnet build --configuration Release
 $ cd bin/Release/netcoreapp3.1
 $ ./asp_net_core
+```
+
+Mã nguồn ứng dụng ASP.net Core cũng tối giản nhất có thể
+```csharp
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
+
+public class Program
+{
+    public static void Main(string[] args) =>
+        Host.CreateDefaultBuilder(args)
+        .ConfigureWebHostDefaults(webBuilder =>
+        {
+            webBuilder.Configure(app =>
+            {
+                app.UseRouting();
+                app.UseEndpoints(route =>
+                {
+                    route.MapGet("/", context => context.Response.WriteAsync("Hello World!"));
+                });
+            }).UseUrls("http://0.0.0.0:8080");
+        }).Build().Run();
+}
 ```
 
 ## Kết quả
@@ -132,3 +168,8 @@ ASP.net Core 3.x có cải tiến nhiều về tốc độ, hiệu năng. Nhưng
 Fiber Golang sử dụng FastHttp, tốc độ rất nhanh, nhưng lại không ổn định qua những lần kiểm thử.
 
 Mình vẫn dùng Iris framework, đủ nhanh và ổn định. Tác giả fix bug nhiệt tình, hỗ trợ yêu cầu cũng tốt.
+
+Các web framework viết bằng Python chạy khá chậm. Flask Python chỉ xử lý được khoảng 300-400 requests / sec. Phù hợp với những bạn dựng thử web app demo sản phẩm AI chứ ra production chắc chắn không được.
+
+Sanic sử dụng cơ chế Event Loop giống với Node.js. Rõ ràng cải thiện hơn Flask nhiều lần, nhưng vẫn không đấu lại với Golang. Nếu cần triển khai ứng dụng AI giao diện web có thể dùng Sanic làm REST API.
+

@@ -1,13 +1,77 @@
 # Web Benchmark một số web framework khác nhau
-1. Gogin
-2. Echo Labstack
-[https://github.com/labstack/echo](https://github.com/labstack/echo)
-3. Iris
-4. Fiber
-5. Flask
-6. Sanic
-7. Node.js Express
-8. ASP.net Core 3.1
+1. [Gogin](https://github.com/gin-gonic/gin)
+2. [Echo Labstack](https://github.com/labstack/echo)
+3. [Iris](https://github.com/kataras/iris)
+4. [Fiber](https://github.com/gofiber/fiber)
+5. [Flask](https://github.com/pallets/flask)
+6. [Sanic](https://github.com/huge-success/sanic)
+7. [Node.js Express](https://github.com/expressjs/express)
+8. [ASP.net Core 3.x](https://github.com/dotnet/aspnetcore)
+
+## Node.js có 3 loại
+### Node thuần không dùng framework trong thư mục Node.
+```javascript
+const http = require('http');
+
+const hostname = '127.0.0.1';
+const port = 8080;
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World!');
+});
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+```
+### Express SingleCore
+```javascript
+const express = require('express')
+const app = express()
+const port = 8080
+
+app.get('/', (req, res) => res.send('Hello World!'))
+
+app.listen(port, () => console.log(`Example app listening on port 
+${port}!`))
+```
+
+### Express Nodes Cluster tận dụng MultiCore
+```javascript
+const express = require("express")
+const os = require("os")
+const cluster = require("cluster")
+ 
+const PORT = process.env.PORT || 8080
+ 
+const clusterWorkerSize = os.cpus().length
+ 
+if (clusterWorkerSize > 1) {
+  if (cluster.isMaster) {
+    for (let i=0; i < clusterWorkerSize; i++) {
+      cluster.fork()
+    }
+ 
+    cluster.on("exit", function(worker) {
+      console.log("Worker", worker.id, " has exitted.")
+    })
+  } else {
+    const app = express()
+    app.get('/', (req, res) => res.send('Hello World!'))
+    app.listen(PORT, function () {
+      console.log(`Express server listening on port ${PORT} and worker ${process.pid}`)
+    })
+  }
+} else {
+  const app = express()
+  app.get('/', (req, res) => res.send('Hello World!'))
+  app.listen(PORT, function () {
+    console.log(`Express server listening on port ${PORT} with the single worker ${process.pid}`)
+  })
+}
+```
 
 ## Để chạy Sanic và Flask
 Cài đặt Python 3.7.x
@@ -19,7 +83,7 @@ $ pip install -r requirements.txt
 
 ```
 ## ASP.net Core 3.1
-
+Chạy file release sau khi build
 ```
 $ cd asp_net_core 
 $ dotnet build --configuration Release
